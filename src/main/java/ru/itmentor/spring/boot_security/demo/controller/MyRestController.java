@@ -35,7 +35,6 @@ public class MyRestController {
     @PostMapping("/")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User savedUser = userService.saveUser(user);
-        userService.saveUser(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
@@ -47,8 +46,8 @@ public class MyRestController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> userForUpdate(@PathVariable Long id, @RequestBody User user) {
-        userService.userForUpdate(user, id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<User> userForUpdate(@PathVariable Long id, @RequestBody User user) {
+        User updateUser = userService.userForUpdate(user, id);
+        return new ResponseEntity<>(updateUser, HttpStatus.OK);
     }
 }

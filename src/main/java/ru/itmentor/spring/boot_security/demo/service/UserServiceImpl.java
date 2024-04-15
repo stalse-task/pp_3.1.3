@@ -41,15 +41,9 @@ public class UserServiceImpl implements UserService {
         userDao.deleteUser(id);
     }
 
-    @Override
-    public void editUser(Long id, User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.editUser(id, user);
-    }
-
     @Transactional
     @Override
-    public void userForUpdate(User user, Long id) {
+    public User userForUpdate(User user, Long id) {
         User existingUser = userDao.getUser(id);
         if (existingUser == null) {
             throw new NullPointerException("Пользователь не найден " + id);
@@ -57,6 +51,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.userForUpdate(user, id);
         }
+        return existingUser;
     }
 
     public User getUser(Long id) {
